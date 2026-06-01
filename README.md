@@ -1,185 +1,368 @@
 # KOU AI Training Sandbox
 
-GitHub IssueをAIで安全に実装し、PR・レビュー・CI・修正・マージ判断まで完走するための練習用リポジトリです。
+家計簿アプリを作りながら、Codex app と GitHub の使い方を学ぶ練習リポジトリです。
 
-このリポジトリは、クローンした人がREADMEに沿って自習できるように作っています。実務データ、本番API、顧客情報、認証情報は使いません。
+最初からGitHubやプログラミング用語を全部覚える必要はありません。まずは **アプリを動かす**、次に **自分に合った家計簿を考える**、そのあとで **IssueやPRを学ぶ** という順番で進めます。
 
-## 1. このリポジトリのゴール
+## 🎯 この教材のゴール
 
-最終的に、次の流れを自分で回せるようになることを目指します。
+この教材では、次の流れを体験します。
 
-1. GitHub Issueを読む
-2. DoDを理解する
-3. 作業ブランチを作る
-4. Codexに実装を依頼する
-5. 差分を確認する
-6. テストとCIを確認する
-7. PRを作る
-8. レビュー指摘を修正する
-9. Issueを満たしているか確認する
-10. マージ判断の材料を説明する
+```text
+AIと相談する
+  ↓
+作りたい家計簿アプリを決める
+  ↓
+GitHub Issueに分ける
+  ↓
+Codex appで1つずつ作る
+  ↓
+localhostで動かして確認する
+  ↓
+PRで差分・テスト・リスクを見る
+```
 
-## 2. まず読む教材
+最終的には、現場伴走スタッフが医院スタッフにこの流れを横で教えられる状態を目指します。
 
-### 必修
+## 🧰 必要なもの
 
-- このREADME
-- [docs/learning-roadmap.md](docs/learning-roadmap.md)
-- [docs/safety-policy.md](docs/safety-policy.md)
-- [docs/dod.md](docs/dod.md)
-- [docs/review-rubric.md](docs/review-rubric.md)
+まずは以下があればOKです。
 
-### 補助教材
+| 必要なもの | 何に使うか |
+|---|---|
+| GitHubアカウント | IssueやPRを見る |
+| Git | リポジトリをcloneする |
+| Node.js 22系 | アプリを動かす |
+| Codex app | AIに実装を依頼する |
+| ブラウザ | localhostで画面を見る |
 
-- Antigravityの教科書
-  - 最初から必修ではありません。
-  - Lv3以降で、Plan、検証証跡、artifact-firstの理解を深める補助教材として使います。
-資料はこちらです
-https://tom-sol.notion.site/Antigravity-3639364dd5c380aba59bc86f1ac10988
+まだ不安でも大丈夫です。最初のゴールは **cloneして画面を開くこと** です。
 
-### Notion
+## 🚀 まず今日やること
 
-- AI開発教育ロードマップ: https://tom-sol.notion.site/AI-3629364dd5c381c289e8d8974c10f8c3?source=copy_link
+今日のゴールは3つだけです。
 
-## 3. セットアップ
+- [ ] リポジトリをcloneする
+- [ ] 家計簿アプリをlocalhostで開く
+- [ ] AIに3つ質問してもらい、自分用アプリの方向性を決める
+
+## 1️⃣ リポジトリをcloneする
+
+ターミナルを開き、作業したいフォルダで次を実行します。
 
 ```bash
 git clone https://github.com/tomosuke-chiba/kou-ai-training-sandbox.git
 cd kou-ai-training-sandbox
-npm test
 ```
 
-このリポジトリは外部依存なしで動きます。`npm install` は不要です。
-
-## 4. 学習の進め方
-
-### Lv0: GitHub Flowを理解する
-
-- Issue / Branch / PR / Review / CI / Test / DoD / Merge を説明できる
-- mainに直接pushしない理由を説明できる
-- コード変更なしでドラフトPRを作れる
-
-進捗記録:
-
-- [progress/lv0.md](progress/lv0.md)
-
-### Lv1: AIツールの役割を理解する
-
-- Codexを基本ツールとして使う
-- Claude Codeは計画・複雑調査・安全制御で使う
-- Antigravityは補助教材として扱う
-- 禁止操作と承認必須操作を説明できる
-
-進捗記録:
-
-- [progress/lv1.md](progress/lv1.md)
-
-### Lv2: 小さなIssueを実装する
-
-- サンプルIssueを2〜3本こなす
-- テストを追加または更新する
-- PR本文に検証結果を書く
-
-進捗記録:
-
-- [progress/lv2.md](progress/lv2.md)
-
-### Lv3: レビュー・CI修正を完走する
-
-- CI失敗を読んで直す
-- レビューコメントに返信して修正する
-- 修正後にDoDを再確認する
-
-進捗記録:
-
-- [progress/lv3.md](progress/lv3.md)
-
-## 5. サンプルIssueの練習順
-
-最初は次の順番で進めてください。
-
-1. typo修正
-2. 空検索で全件表示
-3. 日付降順ソート
-4. loading表示
-5. timeout時のエラー表示
-6. CI失敗修正
-7. レビューコメント2件対応
-8. Issue Template改善
-9. PR Template改善
-10. ADRを書いてから実装
-
-## 6. Codexに渡す基本プロンプト
+✅ できたらOK:
 
 ```text
-このリポジトリのAGENTS.mdとREADME.mdを読んでください。
+kou-ai-training-sandbox
+```
+
+というフォルダの中に入れています。
+
+## 2️⃣ 必要なものをインストールする
+
+次を実行します。
+
+```bash
+npm install
+```
+
+✅ できたらOK:
+
+エラーが止まらず、最後まで終わればOKです。
+
+## 3️⃣ アプリを起動する
+
+次を実行します。
+
+```bash
+npm run dev
+```
+
+ターミナルに次のようなURLが出ます。
+
+```text
+http://localhost:3000
+```
+
+このターミナルは閉じないでください。アプリを動かしている最中です。
+
+✅ できたらOK:
+
+`Local: http://localhost:3000` のような表示が出ています。
+
+## 4️⃣ ブラウザで開く
+
+ブラウザで次を開きます。
+
+```text
+http://localhost:3000
+```
+
+もし `3000` が使えない場合、ターミナルに別のURLが出ます。そのURLを開いてください。
+
+✅ できたらOK:
+
+画面に次の文字が出ます。
+
+```text
+あなたにぴったりの家計簿アプリを作りながら学ぶ
+```
+
+## 5️⃣ まず触ってみる
+
+画面を開いたら、コードを見る前にアプリを触ります。
+
+- 支出名を入れる
+- 金額を入れる
+- カテゴリを選ぶ
+- 「支出を追加」を押す
+- 合計が変わるか見る
+- 削除ボタンを押してみる
+
+✅ できたらOK:
+
+「自分でもアプリを動かせた」と感じられればOKです。
+
+## 6️⃣ AIに3つ質問してもらう
+
+ChatGPTまたはCodex appに、次の文章をそのまま貼ります。
+
+```text
+あなたにぴったりの家計簿アプリを作りたいです。
+良いアウトプットを出すために、私に聞きたいことを3つに絞って質問してください。
+質問は1つずつ行ってください。
+```
+
+AIの質問に答えながら、自分に合った家計簿アプリを考えます。
+
+質問の例:
+
+- 毎月いちばん見えるようにしたいお金の不安や目標は何ですか？
+- いつ・どこで家計簿を入力したいですか？
+- 技術構成はどうしますか？推奨はNext.jsです。
+
+✅ できたらOK:
+
+「自分はどんな家計簿アプリを作りたいか」を一言で説明できます。
+
+## 7️⃣ 要件メモを作る
+
+AIとの相談が終わったら、要件メモを作ります。
+
+参考ファイル:
+
+- [docs/my-budget-app-requirements.example.md](docs/my-budget-app-requirements.example.md)
+
+自分用に作るファイル名:
+
+```text
+docs/my-budget-app-requirements.md
+```
+
+最初はこれだけ書ければOKです。
+
+```md
+# 私の家計簿アプリ要件
+
+## アプリ名
+
+## 解決したい悩み
+
+## 最初に必ずほしい機能
+
+## 今回やらないこと
+
+## 完成条件
+
+## 技術構成
+```
+
+✅ できたらOK:
+
+「何を作るか」と「今回は何を作らないか」が書けています。
+
+## 8️⃣ GitHub Issueに分ける
+
+要件が決まったら、作業を小さく分けます。
+
+最初のIssue例:
+
+- 支出入力フォームを作る
+- 支出一覧を表示する
+- カテゴリ別合計を表示する
+- 月別フィルタを追加する
+- localStorageで保存する
+- 自分専用機能を1つ追加する
+
+Issueには次を書きます。
+
+```md
+## 目的
+
+## やること
+
+## 完了条件 DoD
+
+## やらないこと
+
+## localhost確認
+```
+
+詳しくはこちら:
+
+- [docs/github-issue-playbook.md](docs/github-issue-playbook.md)
+- [docs/issue-backlog-budget-app.md](docs/issue-backlog-budget-app.md)
+
+✅ できたらOK:
+
+1つのIssueが「今日やる小さな作業」になっています。
+
+## 9️⃣ Codex appに実装を依頼する
+
+Codex appでこのリポジトリを開きます。
+
+Issueを1つ選び、次のように依頼します。
+
+```text
+このリポジトリのREADME.mdとAGENTS.mdを読んでください。
 Issue #{番号} を実装してください。
 
 条件:
 - 1 Issue = 1 Branch = 1 PR の範囲に収める
 - Issue外の変更をしない
 - 必要なテストを追加または更新する
-- npm test を実行する
-- PR本文に変更内容、検証結果、リスクを書く
+- npm run lint、npm test、npm run build を実行する
+- localhostで確認する手順を書く
+- PR本文に変更内容、検証結果、リスク、ロールバック方法を書く
 - .env、認証情報、本番API、外部送信には触れない
 ```
 
-## 7. Claude Codeに渡す基本プロンプト
+✅ できたらOK:
 
-```text
-このIssueの実装計画だけ作ってください。
-まだファイル編集はしないでください。
+Codexが何を変更したか、差分を見ながら確認できます。
 
-確認したいこと:
-- Issueの目的
-- DoD
-- 変更対象ファイル
-- テスト方針
-- リスク
-- Codexに任せるべき実装手順
+## 🔟 localhostで確認する
+
+Codexが変更したら、ブラウザで確認します。
+
+見ること:
+
+- Issueで作ると言った機能が動くか
+- 余計な機能が増えていないか
+- エラーが出ていないか
+- 自分の言葉で説明できるか
+
+確認コマンド:
+
+```bash
+npm run lint
+npm test
+npm run build
 ```
 
-## 8. やってはいけないこと
+✅ できたらOK:
 
-- mainへ直接pushする
+動作確認した内容をPRに書けます。
+
+## 🔍 PRレビューする
+
+PRでは、次を確認します。
+
+- Issueの目的を満たしているか
+- やらないことに触れていないか
+- localhostで確認したか
+- テストとbuildが通ったか
+- リスクが書かれているか
+- 戻し方が書かれているか
+
+詳しくはこちら:
+
+- [docs/review-rubric.md](docs/review-rubric.md)
+
+✅ できたらOK:
+
+「このPRはマージしてよい / まだ直すべき」と説明できます。
+
+## 🗺️ カリキュラム全体
+
+| Phase | 作るもの | 学ぶこと |
+|---:|---|---|
+| 1 | 自分用家計簿の要件メモ | AI壁打ち、要件定義、MVP |
+| 2 | GitHub Issue 5から8本 | Issue、DoD、やらないこと |
+| 3 | 支出入力と一覧表示 | Codex app、差分確認、PR |
+| 4 | localhostで動く家計簿v1 | 開発環境、動作確認、エラー確認 |
+| 5 | 集計、保存、編集などの追加機能 | テスト、CI、レビュー対応 |
+| 6 | 自分専用機能 | Issue分割、Merge判断、本番環境との差 |
+
+詳しいロードマップ:
+
+- [docs/app-first-roadmap.md](docs/app-first-roadmap.md)
+
+## 🛑 重要な禁止事項
+
+練習中でも、これはやりません。
+
+- mainへ直接pushしない
 - `.env*` を作る、読む、編集する
-- 実顧客情報を入れる
-- APIキーや認証情報を入れる
-- 本番APIに接続する
-- 外部送信する
-- 金銭判断、契約変更、カード操作、振込操作を扱う
-- AIの差分を読まずにマージする
+- 実顧客情報、患者情報、応募者情報、スタッフ個人情報を入れない
+- APIキーや認証情報を入れない
+- 本番API、本番DB、外部送信を扱わない
+- 金銭判断、契約変更、カード操作、振込操作を扱わない
+- AIの差分を読まずにマージしない
 
-## 9. GitHub設定メモ
+安全ルール:
 
-このリポジトリはprivateで作成しています。GitHub Pro化、またはpublic化できる場合は、main branch protectionを有効にしてください。
+- [docs/safety-policy.md](docs/safety-policy.md)
 
-推奨設定:
+## 🆘 困ったとき
 
-- PR必須
-- 1 approval必須
-- conversation resolution必須
-- required checks: `lint`, `test`, `build`
-- force push禁止
-- branch deletion禁止
+### `npm install` で失敗する
 
-## 10. 合格条件
+Node.jsのバージョンを確認します。
 
-Lv3までの合格条件:
+```bash
+node -v
+```
 
-- [ ] Issue / Branch / PR / Review / CI / Test / DoD / Merge を説明できる
-- [ ] 少なくとも3本のIssueを完走した
-- [ ] 1本以上はbug fix + regression testを含む
-- [ ] 1本以上はレビューコメント2往復を完了した
-- [ ] CIログを読み、失敗理由を説明して直せる
-- [ ] PR本文にIssueリンク、変更概要、検証方法、リスク、DoDを書ける
-- [ ] AI出力をそのまま信用せず、自分で説明・再現・検証できる
+この教材はNode.js 22系を想定しています。
 
-## 11. 次にやること
+### `localhost:3000` が開けない
 
-1. GitHub上でこのリポジトリのIssueを確認する
-2. Lv0の進捗チェックを埋める
-3. 最初のIssueを1つ選ぶ
-4. Codexに実装を依頼する
-5. PRを作る
-6. レビュー指摘に対応する
+`npm run dev` を実行しているターミナルを確認します。別のURLが出ている場合は、そのURLを開きます。
+
+### 何からIssueにすればいいかわからない
+
+[docs/issue-backlog-budget-app.md](docs/issue-backlog-budget-app.md) から1つ選びます。
+
+最初はこれがおすすめです。
+
+```text
+支出入力フォームを作る
+```
+
+### Codexの差分がよくわからない
+
+マージせずに止まります。
+
+```text
+この差分を説明できません。レビューしてください。
+```
+
+と現場伴走者またはレビュー担当者に伝えます。
+
+## 🏁 合格条件
+
+最後に、次ができれば合格です。
+
+- [ ] 自分用家計簿アプリの要件を説明できる
+- [ ] 要件をIssueへ小さく分解できる
+- [ ] Codex appでIssueを実装依頼できる
+- [ ] localhostで動作確認できる
+- [ ] PRの差分、テスト、リスクを説明できる
+- [ ] localhostと本番環境の違いを説明できる
+- [ ] 受講者に同じ流れを横で伴走して教えられる

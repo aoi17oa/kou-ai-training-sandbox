@@ -1,0 +1,40 @@
+name: Budget app feature
+description: 家計簿アプリ機能追加の練習Issue
+title: "app: "
+labels: ["practice", "budget-app"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目的
+      description: なぜこの機能を作りますか？
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: やること
+      description: 今回変更することを小さく書いてください。
+    validations:
+      required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: やらないこと
+      description: 今回は触らないことを書いてください。
+    validations:
+      required: true
+  - type: textarea
+    id: dod
+    attributes:
+      label: DoD
+      description: 何ができたら完了ですか？
+    validations:
+      required: true
+  - type: textarea
+    id: local_check
+    attributes:
+      label: localhost確認
+      description: localhostで何を確認しますか？
+    validations:
+      required: true

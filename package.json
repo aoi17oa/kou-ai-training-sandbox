@@ -1,12 +1,20 @@
 {
   "name": "kou-ai-training-sandbox",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "node --check src/tasks.js && node --check src/render.js && node --check tests/tasks.test.js",
+    "dev": "next dev",
+    "lint": "node --check src/tasks.js && node --check src/render.js && node --check src/budget.js && node --check tests/tasks.test.js && node --check tests/budget.test.js",
     "test": "node --test",
-    "build": "node src/render.js"
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "^16.2.7",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
   }
 }
-
