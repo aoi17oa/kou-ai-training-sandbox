@@ -1,0 +1,24 @@
+name: Block Direct Push to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  block:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if direct push to main
+        run: |
+          echo "❌ main への直接 push は禁止されています。"
+          echo ""
+          echo "正しい手順:"
+          echo "  1. practice/ または docs/ など作業用ブランチを作る"
+          echo "  2. そのブランチで変更する"
+          echo "  3. Pull Request を作成する"
+          echo "  4. レビュー後に tomosuke-chiba がマージする"
+          echo ""
+          echo "このエラーは意図的なものです。push した内容は取り消せません。"
+          echo "困ったときは tomosuke-chiba に連絡してください。"
+          exit 1
