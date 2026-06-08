@@ -2,16 +2,27 @@
 
 ---
 
-## 🚨 絶対に守ること（最初に読んでください）
+## 🍴 まず fork してください（推奨）
 
-> **main ブランチへの直接 push は禁止です。**
->
-> このリポジトリは **ブランチ保護** が設定されています。`main` への直接 push は技術的にブロックされます。
+このリポジトリは **fork して自分のアカウントにコピーしてから使う** ことを推奨しています。
+
+**fork のやり方:**
+1. このページ右上の **Fork** ボタンを押す
+2. 自分の GitHub アカウントにコピーされる
+3. 自分のリポジトリで自由に作業できる
+
+fork すれば自分のリポジトリなので、ブランチ制限なく自由に使えます。
+
+---
+
+## 🚨 fork せずにこのリポジトリで作業する場合
+
+> **main ブランチへの直接 push は技術的にブロックされます。**
 >
 > - ✅ 正しい手順: **ブランチを作る → 変更する → Pull Request を出す**
 > - ❌ 禁止: `git push origin main`
 >
-> やってしまったときはすぐに **tomosuke-chiba** に連絡してください。
+> 困ったときはすぐに **tomosuke-chiba** に連絡してください。
 
 ---
 
@@ -51,32 +62,40 @@ PRで差分・テスト・リスクを見る
 | Codex app | AIに実装を依頼する |
 | ブラウザ | localhostで画面を見る |
 
-まだ不安でも大丈夫です。最初のゴールは **cloneして画面を開くこと** です。
+まだ不安でも大丈夫です。最初のゴールは **fork して画面を開くこと** です。
 
 ## 🚀 まず今日やること
 
 今日のゴールは3つだけです。
 
-- [ ] リポジトリをcloneする
+- [ ] このリポジトリを fork する
 - [ ] 家計簿アプリをlocalhostで開く
 - [ ] AIに3つ質問してもらい、自分用アプリの方向性を決める
 
-## 1️⃣ リポジトリをcloneする
+## 1️⃣ リポジトリを fork する（推奨）
 
-ターミナルを開き、作業したいフォルダで次を実行します。
+### fork とは？
+
+このリポジトリを自分の GitHub アカウントにコピーすることです。
+fork すれば自分のリポジトリとして自由に使えます。
+
+### fork の手順
+
+1. このページ右上の **Fork** ボタンを押す
+2. 「Create fork」を押す
+3. 自分のアカウントにコピーされる（例: `あなたのID/kou-ai-training-sandbox`）
+
+### fork 後のクローン
 
 ```bash
-git clone https://github.com/tomosuke-chiba/kou-ai-training-sandbox.git
+git clone https://github.com/あなたのGitHubID/kou-ai-training-sandbox.git
 cd kou-ai-training-sandbox
 ```
 
-✅ できたらOK:
+✅ できたらOK: `kou-ai-training-sandbox` フォルダの中に入れています。
 
-```text
-kou-ai-training-sandbox
-```
-
-というフォルダの中に入れています。
+> fork しない場合は `git clone https://github.com/tomosuke-chiba/kou-ai-training-sandbox.git` でもOKですが、
+> その場合は必ず作業用ブランチを作ってから変更してください（main への直接 push はブロックされます）。
 
 ## 2️⃣ 必要なものをインストールする
 
