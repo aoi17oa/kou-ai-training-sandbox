@@ -20,10 +20,6 @@ export function createExpense(input) {
   const category = String(input.category || "Other").trim() || "Other";
   const date = String(input.date || new Date().toISOString().slice(0, 10));
 
-  if (!title) {
-    throw new Error("title is required");
-  }
-
   return {
     id: input.id || `expense-${Date.now()}`,
     title,
