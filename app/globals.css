@@ -232,6 +232,44 @@ h2 {
   grid-column: 1 / -1;
 }
 
+.category-field {
+  display: grid;
+  gap: 8px;
+}
+
+.field-label {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.category-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.category-picker .category-chip {
+  width: auto;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.category-picker .category-chip:hover {
+  background: var(--accent-soft);
+}
+
+.category-picker .category-chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
 .summary-panel {
   display: grid;
   gap: 14px;

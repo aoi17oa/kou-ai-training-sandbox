@@ -167,15 +167,6 @@ export default function Home() {
         <div className="budget-layout">
           <form className="expense-form" onSubmit={addExpense}>
             <label>
-              支出名
-              <input
-                value={form.title}
-                onChange={(event) => updateForm("title", event.target.value)}
-                placeholder="例: コーヒー"
-                required
-              />
-            </label>
-            <label>
               金額
               <input
                 type="number"
@@ -187,16 +178,29 @@ export default function Home() {
               />
             </label>
             <label>
-              カテゴリ
-              <select
-                value={form.category}
-                onChange={(event) => updateForm("category", event.target.value)}
-              >
-                {defaultCategories.map((category) => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
+              支出名（任意）
+              <input
+                value={form.title}
+                onChange={(event) => updateForm("title", event.target.value)}
+                placeholder="未入力でもOK（例: コーヒー）"
+              />
             </label>
+            <div className="category-field wide">
+              <span className="field-label">カテゴリ（タップで選択）</span>
+              <div className="category-picker">
+                {defaultCategories.map((category) => (
+                  <button
+                    type="button"
+                    key={category}
+                    className={form.category === category ? "category-chip active" : "category-chip"}
+                    aria-pressed={form.category === category}
+                    onClick={() => updateForm("category", category)}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </div>
             <label>
               日付
               <input
@@ -259,7 +263,7 @@ export default function Home() {
           {visibleExpenses.map((expense) => (
             <article key={expense.id} className="expense-item">
               <div>
-                <strong>{expense.title}</strong>
+                <strong>{expense.title || expense.category}</strong>
                 <span>{expense.category} / {expense.date}</span>
                 {expense.note ? <small>{expense.note}</small> : null}
               </div>

@@ -30,8 +30,15 @@ test("createExpense trims title and normalizes amount", () => {
   });
 });
 
-test("createExpense requires a title", () => {
-  assert.throws(() => createExpense({ title: "", amount: 100 }), /title is required/);
+test("createExpense allows an empty title", () => {
+  const expense = createExpense({
+    id: "no-title",
+    amount: 100,
+    category: "Food",
+    date: "2026-06-02"
+  });
+  assert.equal(expense.title, "");
+  assert.equal(expense.amount, 100);
 });
 
 test("totalExpenses returns the sum of amounts", () => {
