@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   createExpense,
   filterExpenses,
+  parseStoredExpenses,
   summarizeByCategory,
   totalExpenses
 } from "../src/budget.js";
@@ -58,4 +59,16 @@ test("filterExpenses filters by category and month", () => {
     filterExpenses(expenses, { category: "Food", month: "2026-06" }).map((expense) => expense.id),
     ["1"]
   );
+});
+
+test("parseStoredExpenses returns the saved array", () => {
+  const raw = JSON.stringify(expenses);
+  assert.deepEqual(parseStoredExpenses(raw), expenses);
+});
+
+test("parseStoredExpenses returns empty array for null or broken data", () => {
+  assert.deepEqual(parseStoredExpenses(null), []);
+  assert.deepEqual(parseStoredExpenses(""), []);
+  assert.deepEqual(parseStoredExpenses("not json"), []);
+  assert.deepEqual(parseStoredExpenses("{}"), []);
 });

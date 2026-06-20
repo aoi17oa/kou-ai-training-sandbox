@@ -1,10 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   createExpense,
   defaultCategories,
+  EXPENSES_STORAGE_KEY,
   filterExpenses,
+  parseStoredExpenses,
   summarizeByCategory,
   totalExpenses
 } from "../src/budget.js";
@@ -66,6 +68,24 @@ export default function Home() {
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [monthFilter, setMonthFilter] = useState("2026-06");
   const [completedSteps, setCompletedSteps] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+
+  // 初回マウント時に localStorage から支出を読み込む（保存済みなら復元）
+  useEffect(() => {
+    const raw = localStorage.getItem(EXPENSES_STORAGE_KEY);
+    if (raw !== null) {
+      setExpenses(parseStoredExpenses(raw));
+    }
+    setLoaded(true);
+  }, []);
+
+  // 読み込み完了後、支出が変わるたびに localStorage へ保存する
+  useEffect(() => {
+    if (!loaded) {
+      return;
+    }
+    localStorage.setItem(EXPENSES_STORAGE_KEY, JSON.stringify(expenses));
+  }, [expenses, loaded]);
 
   const visibleExpenses = useMemo(
     () => filterExpenses(expenses, { category: categoryFilter, month: monthFilter }),

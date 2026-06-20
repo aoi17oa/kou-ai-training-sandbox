@@ -52,3 +52,19 @@ export function filterExpenses(expenses, filters = {}) {
     return categoryMatches && monthMatches;
   });
 }
+
+export const EXPENSES_STORAGE_KEY = "kou-budget-expenses";
+
+// localStorageから読み込んだ文字列を安全に支出配列へ変換する。
+// 未保存(null)や壊れたデータのときは空配列を返す。
+export function parseStoredExpenses(raw) {
+  if (!raw) {
+    return [];
+  }
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
