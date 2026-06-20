@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
+  buildSavingsInsight,
   createExpense,
   defaultCategories,
   EXPENSES_STORAGE_KEY,
@@ -93,6 +94,7 @@ export default function Home() {
   );
   const categorySummary = useMemo(() => summarizeByCategory(visibleExpenses), [visibleExpenses]);
   const total = useMemo(() => totalExpenses(visibleExpenses), [visibleExpenses]);
+  const insight = useMemo(() => buildSavingsInsight(expenses), [expenses]);
 
   function updateForm(field, value) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -294,6 +296,43 @@ export default function Home() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="insight-band">
+        <div className="panel-heading">
+          <p className="eyebrow">3-Month Review</p>
+          <h2>3ヶ月ふりかえり＆節約ヒント</h2>
+        </div>
+        {insight.suggestion ? (
+          <div className="insight-layout">
+            <div className="insight-averages">
+              <p className="helper-text">
+                対象期間: {insight.months.slice().reverse().join(" 〜 ")}（カテゴリ別の月平均）
+              </p>
+              {insight.averages.map((item) => (
+                <div key={item.category}>
+                  <span>{item.category}</span>
+                  <strong>月平均 {item.monthlyAverage.toLocaleString()}円</strong>
+                </div>
+              ))}
+            </div>
+            <div className="insight-suggestion">
+              <p className="eyebrow">節約のヒント</p>
+              <p>
+                <strong>{insight.suggestion.category}</strong> が直近3ヶ月でいちばん多く、
+                月平均 <strong>{insight.suggestion.currentAverage.toLocaleString()}円</strong> です。
+              </p>
+              <p className="insight-headline">
+                月 {insight.suggestion.targetAmount.toLocaleString()}円 に抑えれば、
+                <strong>月 {insight.suggestion.monthlySaving.toLocaleString()}円 ・ 年 {insight.suggestion.yearlySaving.toLocaleString()}円</strong> 浮きます。
+              </p>
+            </div>
+          </div>
+        ) : (
+          <p className="helper-text">
+            支出を入力すると、直近3ヶ月のカテゴリ別の月平均と「どこを減らせばいくら浮くか」を表示します。
+          </p>
+        )}
       </section>
 
       <section className="roadmap-band">
