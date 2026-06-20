@@ -459,3 +459,22 @@ h2 {
     grid-template-columns: 1fr;
   }
 }
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.form-actions button[type="submit"] {
+  flex: 1;
+}
+
+.form-actions .ghost {
+  background: #eef2ef;
+  color: var(--ink);
+}
+
+.expense-buttons {
+  display: flex;
+  gap: 8px;
+}
