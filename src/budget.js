@@ -126,3 +126,8 @@ export function buildSavingsInsight(expenses, options = {}) {
     }
   };
 }
+
+// 同じidの支出を更新後の内容に置き換えた新しい配列を返す（件数は増えない）。
+export function replaceExpense(expenses, updated) {
+  return expenses.map((expense) => (expense.id === updated.id ? updated : expense));
+}

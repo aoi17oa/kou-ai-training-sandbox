@@ -6,6 +6,7 @@ import {
   filterExpenses,
   parseStoredExpenses,
   recentMonths,
+  replaceExpense,
   summarizeByCategory,
   totalExpenses
 } from "../src/budget.js";
@@ -104,4 +105,16 @@ test("buildSavingsInsight returns no suggestion when there is no data", () => {
   const insight = buildSavingsInsight([]);
   assert.equal(insight.suggestion, null);
   assert.deepEqual(insight.averages, []);
+});
+
+test("replaceExpense updates the matching id without changing the count", () => {
+  const list = [
+    { id: "1", title: "Lunch", amount: 900, category: "Food", date: "2026-06-01" },
+    { id: "2", title: "Book", amount: 1800, category: "Learning", date: "2026-06-02" }
+  ];
+  const updated = { id: "2", title: "Book", amount: 2000, category: "Fun", date: "2026-06-02" };
+  const result = replaceExpense(list, updated);
+  assert.equal(result.length, 2);
+  assert.deepEqual(result[1], updated);
+  assert.equal(result[0].amount, 900);
 });

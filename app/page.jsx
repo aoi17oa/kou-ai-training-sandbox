@@ -8,6 +8,7 @@ import {
   EXPENSES_STORAGE_KEY,
   filterExpenses,
   parseStoredExpenses,
+  replaceExpense,
   summarizeByCategory,
   totalExpenses
 } from "../src/budget.js";
@@ -70,6 +71,7 @@ export default function Home() {
   const [monthFilter, setMonthFilter] = useState("2026-06");
   const [completedSteps, setCompletedSteps] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
   // 初回マウント時に localStorage から支出を読み込む（保存済みなら復元）
   useEffect(() => {
@@ -100,8 +102,15 @@ export default function Home() {
     setForm((current) => ({ ...current, [field]: value }));
   }
 
-  function addExpense(event) {
+  function submitExpense(event) {
     event.preventDefault();
+    if (editingId) {
+      const updated = createExpense({ ...form, id: editingId });
+      setExpenses((current) => replaceExpense(current, updated));
+      setEditingId(null);
+      setForm((current) => ({ ...current, title: "", amount: "", note: "" }));
+      return;
+    }
     const expense = createExpense({
       ...form,
       id: `expense-${Date.now()}`
@@ -110,8 +119,27 @@ export default function Home() {
     setForm((current) => ({ ...current, title: "", amount: "", note: "" }));
   }
 
+  function startEdit(expense) {
+    setEditingId(expense.id);
+    setForm({
+      title: expense.title || "",
+      amount: String(expense.amount ?? ""),
+      category: expense.category || "Food",
+      date: expense.date || new Date().toISOString().slice(0, 10),
+      note: expense.note || ""
+    });
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setForm((current) => ({ ...current, title: "", amount: "", note: "" }));
+  }
+
   function removeExpense(id) {
     setExpenses((current) => current.filter((expense) => expense.id !== id));
+    if (editingId === id) {
+      setEditingId(null);
+    }
   }
 
   function toggleStep(index) {
@@ -187,7 +215,7 @@ export default function Home() {
           <h2>動く家計簿</h2>
         </div>
         <div className="budget-layout">
-          <form className="expense-form" onSubmit={addExpense}>
+          <form className="expense-form" onSubmit={submitExpense}>
             <label>
               金額
               <input
@@ -240,7 +268,12 @@ export default function Home() {
                 placeholder="任意メモ"
               />
             </label>
-            <button type="submit">支出を追加</button>
+            <div className="form-actions wide">
+              <button type="submit">{editingId ? "更新する" : "支出を追加"}</button>
+              {editingId ? (
+                <button type="button" className="ghost" onClick={cancelEdit}>キャンセル</button>
+              ) : null}
+            </div>
           </form>
 
           <div className="summary-panel">
@@ -291,7 +324,10 @@ export default function Home() {
               </div>
               <div className="expense-actions">
                 <strong>{expense.amount.toLocaleString()}円</strong>
-                <button type="button" onClick={() => removeExpense(expense.id)}>削除</button>
+                <div className="expense-buttons">
+                  <button type="button" onClick={() => startEdit(expense)}>編集</button>
+                  <button type="button" onClick={() => removeExpense(expense.id)}>削除</button>
+                </div>
               </div>
             </article>
           ))}
