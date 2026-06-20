@@ -1,9 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  buildSavingsInsight,
   createExpense,
   filterExpenses,
   parseStoredExpenses,
+  recentMonths,
   summarizeByCategory,
   totalExpenses
 } from "../src/budget.js";
@@ -71,4 +73,35 @@ test("parseStoredExpenses returns empty array for null or broken data", () => {
   assert.deepEqual(parseStoredExpenses(""), []);
   assert.deepEqual(parseStoredExpenses("not json"), []);
   assert.deepEqual(parseStoredExpenses("{}"), []);
+});
+
+test("recentMonths returns months newest-first", () => {
+  assert.deepEqual(recentMonths("2026-06", 3), ["2026-06", "2026-05", "2026-04"]);
+});
+
+test("recentMonths handles year boundaries", () => {
+  assert.deepEqual(recentMonths("2026-01", 3), ["2026-01", "2025-12", "2025-11"]);
+});
+
+test("buildSavingsInsight averages 3 months and suggests the biggest category", () => {
+  const threeMonths = [
+    { id: "a1", title: "外食", amount: 12000, category: "Fun", date: "2026-04-10" },
+    { id: "a2", title: "外食", amount: 18000, category: "Fun", date: "2026-05-10" },
+    { id: "a3", title: "外食", amount: 24000, category: "Fun", date: "2026-06-10" },
+    { id: "b1", title: "ランチ", amount: 3000, category: "Food", date: "2026-06-01" }
+  ];
+  const insight = buildSavingsInsight(threeMonths);
+  assert.deepEqual(insight.months, ["2026-06", "2026-05", "2026-04"]);
+  assert.equal(insight.averages[0].category, "Fun");
+  assert.equal(insight.averages[0].monthlyAverage, 18000);
+  assert.equal(insight.suggestion.category, "Fun");
+  assert.equal(insight.suggestion.targetAmount, 14400);
+  assert.equal(insight.suggestion.monthlySaving, 3600);
+  assert.equal(insight.suggestion.yearlySaving, 43200);
+});
+
+test("buildSavingsInsight returns no suggestion when there is no data", () => {
+  const insight = buildSavingsInsight([]);
+  assert.equal(insight.suggestion, null);
+  assert.deepEqual(insight.averages, []);
 });
